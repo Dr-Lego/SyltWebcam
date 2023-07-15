@@ -18,6 +18,8 @@
     <div id='player-wrapper'></div>
     <script src='https://cdn.jsdelivr.net/npm/clappr@latest'></script>
     <script>
+        const streamUrl = new URL(window.location.href).searchParams.get("stream");
+
         function calculateAspectRatioFit(srcWidth, srcHeight, maxWidth, maxHeight) {
             var ratio = Math.min(maxWidth / srcWidth, maxHeight / srcHeight);
             return { width: srcWidth*ratio, height: srcHeight*ratio };
@@ -34,7 +36,7 @@
 
 
         var player = new Clappr.Player({
-        source: 'https://srv-streaming-02.nordwind-ev.de/hls/wenningstedt-02.m3u8',
+        source: ['https://srv-streaming-02.nordwind-ev.de/hls/wenningstedt-02.m3u8',streamUrl][Boolean(streamUrl)*1],
         mute: true,
         height: size.height,
         width: size.width,
