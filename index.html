@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <title>Sylt Webcam</title>
+    <link href='https://cdn.jsdelivr.net/npm/clappr@latest/dist/clappr.min.css' rel='stylesheet'>
+    <style>
+        body{
+            width:100vw;
+            height:100vh;
+            margin: 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    
+    <div id='player-wrapper'></div>
+    <script src='https://cdn.jsdelivr.net/npm/clappr@latest'></script>
+    <script>
+        function calculateAspectRatioFit(srcWidth, srcHeight, maxWidth, maxHeight) {
+            var ratio = Math.min(maxWidth / srcWidth, maxHeight / srcHeight);
+            return { width: srcWidth*ratio, height: srcHeight*ratio };
+        };
+
+        const vw = Math.min(document.documentElement.clientWidth || 0, window.innerWidth || 0)
+        const vh = Math.min(document.documentElement.clientHeight || 0, window.innerHeight || 0)
+        console.log(vw,vh)
+        const size = calculateAspectRatioFit(800,450,vw,vh)
+
+        var playerElement = document.getElementById('player-wrapper');
+        playerElement.style.marginTop = `${(vh - size.height) / 2}px`
+        playerElement.style.marginLeft = `${(vw - size.width) / 2}px`
+
+
+        var player = new Clappr.Player({
+        source: 'https://srv-streaming-02.nordwind-ev.de/hls/wenningstedt-02.m3u8',
+        mute: true,
+        height: size.height,
+        width: size.width,
+        hideMediaControl: 'true',
+        chromeless: 'true',
+        allowUserInteraction: 'false',
+        autoPlay: 'true'
+        });
+
+        player.attachTo(playerElement);
+    </script>
+
+
+</body>
+</html>
